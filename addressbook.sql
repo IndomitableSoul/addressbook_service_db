@@ -127,3 +127,66 @@ mysql> SELECT * FROM address_book WHERE City='Bangalore' ORDER BY Name;
 +---------+------------------------+-----------+-----------+--------+----------+-------------------------+
 2 rows in set (0.00 sec)
 
+
+--UC-9 Ability to identify each
+--       Address Book with name and
+--       Type.
+
+mysql> ALTER TABLE address_book
+    -> ADD (Type varchar(30) NOT NULL);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from address_book;
++---------+------------------------+-----------+-----------+--------+----------+-------------------------+------+
+| Name    | Address                | City      | State     | Zip    | Phone_No | Email                   | Type |
++---------+------------------------+-----------+-----------+--------+----------+-------------------------+------+
+| Nikita  | Marathalli Bangalore   | Bangalore | Karnataka | 560037 | 98989898 | amarnikitabridgelabzcom |      |
+| Ashwath | Kundalahalli Bangalore | Bangalore | Karnataka | 560037 |  9000000 | ashwathbridgelabzcom    |      |
++---------+------------------------+-----------+-----------+--------+----------+-------------------------+------+
+2 rows in set (0.00 sec)
+
+mysql> UPDATE address_book
+    -> SET Type = 'Friend' WHERE Name = 'Nikita';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE address_book SET Type = 'Professional' WHERE Name = 'Ashwath';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from address_book;
++---------+------------------------+-----------+-----------+--------+----------+-------------------------+--------------+
+| Name    | Address                | City      | State     | Zip    | Phone_No | Email                   | Type         |
++---------+------------------------+-----------+-----------+--------+----------+-------------------------+--------------+
+| Nikita  | Marathalli Bangalore   | Bangalore | Karnataka | 560037 | 98989898 | amarnikitabridgelabzcom | Friend       |
+| Ashwath | Kundalahalli Bangalore | Bangalore | Karnataka | 560037 |  9000000 | ashwathbridgelabzcom    | Professional |
++---------+------------------------+-----------+-----------+--------+----------+-------------------------+--------------+
+2 rows in set (0.00 sec)
+
+--UC10
+mysql> SELECT COUNT(Type) FROM address_book WHERE Type = 'Friend';
++-------------+
+| COUNT(Type) |
++-------------+
+|           1 |
++-------------+
+1 row in set (0.00 sec)
+
+
+--UC-11
+
+mysql> INSERT INTO address_book VALUES ('Maria', 'JP-nagar Bangalore', 'Bangalore', 'Karnataka', 560067, 90008888, 'mariabridgelabzcom','Friend'), ('Maria', 'JPnagar Bangalore', 'Bangalore','Karnataka', 560067, 90008888, 'mariabridgelabzcom','Family');
+Query OK, 2 rows affected (0.02 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from address_book;
++---------+------------------------+-----------+-----------+--------+----------+-------------------------+--------------+
+| Name    | Address                | City      | State     | Zip    | Phone_No | Email                   | Type         |
++---------+------------------------+-----------+-----------+--------+----------+-------------------------+--------------+
+| Nikita  | Marathalli Bangalore   | Bangalore | Karnataka | 560037 | 98989898 | amarnikitabridgelabzcom | Friend       |
+| Ashwath | Kundalahalli Bangalore | Bangalore | Karnataka | 560037 |  9000000 | ashwathbridgelabzcom    | Professional |
+| Maria   | JP-nagar Bangalore     | Bangalore | Karnataka | 560067 | 90008888 | mariabridgelabzcom      | Friend       |
+| Maria   | JPnagar Bangalore      | Bangalore | Karnataka | 560067 | 90008888 | mariabridgelabzcom      | Family       |
++---------+------------------------+-----------+-----------+--------+----------+-------------------------+--------------+
+4 rows in set (0.00 sec)
